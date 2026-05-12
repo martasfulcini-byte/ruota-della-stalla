@@ -12,12 +12,10 @@
       --rosso: #e53935;
       --sfondo: #fff8e7;
       --testo: #2d2418;
-      --card: #ffffff;
+      --marrone: #4b2e16;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -29,34 +27,30 @@
 
     header {
       text-align: center;
-      padding: 24px 16px 8px;
+      padding: 22px 16px 8px;
     }
 
     h1 {
       margin: 0;
-      font-size: clamp(2rem, 5vw, 4rem);
+      font-size: clamp(2.2rem, 5vw, 4.2rem);
       letter-spacing: 1px;
     }
 
-    .sottotitolo {
-      margin-top: 8px;
-      font-size: 1.1rem;
-      opacity: 0.8;
-    }
+    .sottotitolo { margin-top: 8px; font-size: 1.1rem; opacity: 0.8; }
 
     main {
       display: grid;
-      grid-template-columns: minmax(320px, 1fr) 380px;
-      gap: 28px;
-      padding: 20px;
-      max-width: 1250px;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      padding: 18px;
+      max-width: 1300px;
       margin: 0 auto;
       align-items: start;
     }
 
     .area-gioco,
     .pannello {
-      background: rgba(255, 255, 255, 0.86);
+      background: rgba(255,255,255,0.9);
       border-radius: 28px;
       padding: 24px;
       box-shadow: 0 18px 45px rgba(76, 52, 18, 0.16);
@@ -66,14 +60,14 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      min-height: 660px;
+      min-height: 690px;
     }
 
     .ruota-wrapper {
       position: relative;
-      width: min(76vw, 520px);
+      width: min(74vw, 520px);
       aspect-ratio: 1;
-      margin-top: 10px;
+      margin-top: 8px;
     }
 
     .freccia {
@@ -85,7 +79,7 @@
       height: 0;
       border-left: 22px solid transparent;
       border-right: 22px solid transparent;
-      border-top: 46px solid #4b2e16;
+      border-top: 46px solid var(--marrone);
       z-index: 5;
       filter: drop-shadow(0 4px 2px rgba(0,0,0,0.22));
     }
@@ -94,7 +88,7 @@
       width: 100%;
       height: 100%;
       border-radius: 50%;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.22);
       background: white;
       transition: transform 4.2s cubic-bezier(0.12, 0.72, 0.12, 1);
     }
@@ -107,7 +101,7 @@
       height: 92px;
       border-radius: 50%;
       background: #fff7df;
-      border: 7px solid #4b2e16;
+      border: 7px solid var(--marrone);
       display: grid;
       place-items: center;
       font-size: 2.2rem;
@@ -116,7 +110,7 @@
     }
 
     .azioni {
-      margin-top: 28px;
+      margin-top: 24px;
       display: flex;
       gap: 14px;
       flex-wrap: wrap;
@@ -126,45 +120,28 @@
     button {
       border: none;
       border-radius: 999px;
-      padding: 15px 26px;
-      font-size: 1.05rem;
+      padding: 14px 24px;
+      font-size: 1rem;
       font-weight: 800;
       cursor: pointer;
       transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
     }
 
-    button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-    }
+    button:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.15); }
+    button:disabled { opacity: 0.55; cursor: not-allowed; transform: none; box-shadow: none; }
 
-    button:disabled {
-      opacity: 0.55;
-      cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
-    }
-
-    .btn-gira {
-      background: #4b2e16;
-      color: white;
-      font-size: 1.25rem;
-      padding: 18px 34px;
-    }
-
-    .btn-secondario {
-      background: #ead8b7;
-      color: #3a2716;
-    }
+    .btn-gira { background: var(--marrone); color: white; font-size: 1.25rem; padding: 17px 34px; }
+    .btn-secondario { background: #ead8b7; color: #3a2716; }
+    .btn-admin { position: fixed; right: 18px; top: 18px; z-index: 20; background: var(--marrone); color: white; }
 
     .risultato {
       width: 100%;
-      margin-top: 26px;
+      margin-top: 24px;
       padding: 22px;
       border-radius: 24px;
       background: #fffaf0;
       border: 3px dashed #d2ad70;
-      min-height: 145px;
+      min-height: 210px;
       text-align: center;
     }
 
@@ -183,94 +160,85 @@
       font-size: clamp(1.25rem, 3vw, 2rem);
       font-weight: 800;
       line-height: 1.25;
+      margin-bottom: 18px;
     }
 
-    .placeholder {
-      opacity: 0.65;
-      font-size: 1.25rem;
-      margin-top: 20px;
+    .risposte {
+      display: grid;
+      gap: 12px;
+      max-width: 760px;
+      margin: 0 auto;
     }
 
-    .pannello h2 {
-      margin-top: 0;
-      font-size: 1.5rem;
-    }
-
-    label {
-      display: block;
+    .risposta {
+      background: white;
+      border: 3px solid #ead8b7;
+      color: var(--testo);
+      border-radius: 18px;
+      padding: 16px;
+      font-size: 1.15rem;
       font-weight: 800;
-      margin: 16px 0 8px;
     }
 
-    select,
-    textarea,
-    input {
+    .risposta.corretta { border-color: var(--verde); background: #e8f5e9; }
+    .risposta.errata { border-color: var(--rosso); background: #ffebee; opacity: 0.75; }
+
+    .feedback { margin-top: 14px; font-size: 1.3rem; font-weight: 900; }
+    .placeholder { opacity: 0.65; font-size: 1.25rem; margin-top: 48px; }
+
+    .pannello {
+      width: 390px;
+      max-height: calc(100vh - 36px);
+      overflow: auto;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+
+    .pannello.nascosto {
+      display: none;
+    }
+
+    .pannello h2 { margin-top: 0; font-size: 1.5rem; }
+    label { display: block; font-weight: 800; margin: 14px 0 7px; }
+
+    select, textarea, input {
       width: 100%;
       border: 2px solid #ead8b7;
-      border-radius: 16px;
-      padding: 12px;
+      border-radius: 14px;
+      padding: 11px;
       font-size: 1rem;
       background: white;
       color: var(--testo);
     }
 
-    textarea {
-      min-height: 150px;
-      resize: vertical;
-      line-height: 1.35;
-    }
+    textarea { min-height: 95px; resize: vertical; line-height: 1.35; }
 
-    .aiuto {
-      font-size: 0.9rem;
-      line-height: 1.35;
-      background: #fff4d8;
-      padding: 12px;
-      border-radius: 16px;
+    .box-domanda {
+      background: #fff8e7;
+      border-radius: 18px;
+      padding: 14px;
       margin-top: 14px;
+      border: 2px solid #ead8b7;
     }
 
-    .lista-domande {
-      margin-top: 16px;
-      padding-left: 18px;
-      max-height: 190px;
-      overflow: auto;
-    }
+    .aiuto { font-size: 0.9rem; line-height: 1.35; background: #fff4d8; padding: 12px; border-radius: 16px; margin-top: 14px; }
 
-    .lista-domande li {
-      margin-bottom: 8px;
-    }
+    .lista-domande { margin-top: 14px; padding-left: 18px; max-height: 180px; overflow: auto; }
+    .lista-domande li { margin-bottom: 8px; }
 
-    .legenda {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-top: 12px;
-    }
-
-    .legenda span {
-      border-radius: 12px;
-      padding: 10px;
-      color: white;
-      font-weight: 800;
-      text-align: center;
-    }
-
-    .legenda .giallo {
-      color: #3a2716;
-    }
+    .legenda { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+    .legenda span { border-radius: 12px; padding: 10px; color: white; font-weight: 800; text-align: center; }
+    .legenda .giallo { color: #3a2716; }
 
     @media (max-width: 920px) {
-      main {
-        grid-template-columns: 1fr;
-      }
-
-      .area-gioco {
-        min-height: auto;
-      }
+      main { grid-template-columns: 1fr; }
+      .pannello { width: 100%; max-height: none; }
+      .area-gioco { min-height: auto; }
     }
   </style>
 </head>
 <body>
+  <button class="btn-admin" id="btnAdmin">⚙️ Gestione domande</button>
+
   <header>
     <h1>🐄 La Ruota della Stalla</h1>
     <div class="sottotitolo">Gira la ruota, scopri la difficoltà e rispondi alla domanda!</div>
@@ -294,9 +262,9 @@
       </div>
     </section>
 
-    <aside class="pannello">
+    <aside class="pannello nascosto" id="pannello">
       <h2>Gestione domande</h2>
-      <p>Inserisci una domanda per riga nella categoria corretta. Le domande vengono salvate sul dispositivo.</p>
+      <p>Scegli una categoria, inserisci domanda, tre risposte e indica quella corretta.</p>
 
       <div class="legenda">
         <span style="background: var(--verde)">Verde<br>Facile</span>
@@ -313,16 +281,39 @@
         <option value="rosso">Rosso - Difficile</option>
       </select>
 
-      <label for="domandeInput">Domande</label>
-      <textarea id="domandeInput" placeholder="Scrivi qui le domande, una per riga"></textarea>
+      <div class="box-domanda">
+        <label for="testoDomanda">Domanda</label>
+        <textarea id="testoDomanda" placeholder="Scrivi la domanda"></textarea>
+
+        <label for="risposta1">Risposta 1</label>
+        <input id="risposta1" placeholder="Prima risposta" />
+
+        <label for="risposta2">Risposta 2</label>
+        <input id="risposta2" placeholder="Seconda risposta" />
+
+        <label for="risposta3">Risposta 3</label>
+        <input id="risposta3" placeholder="Terza risposta" />
+
+        <label for="corretta">Risposta corretta</label>
+        <select id="corretta">
+          <option value="0">Risposta 1</option>
+          <option value="1">Risposta 2</option>
+          <option value="2">Risposta 3</option>
+        </select>
+
+        <div class="azioni" style="justify-content: flex-start; margin-top: 14px;">
+          <button class="btn-secondario" id="btnAggiungi">Aggiungi domanda</button>
+          <button class="btn-secondario" id="btnSvuota">Svuota campi</button>
+        </div>
+      </div>
 
       <div class="azioni" style="justify-content: flex-start; margin-top: 14px;">
-        <button class="btn-secondario" id="btnSalva">Salva domande</button>
         <button class="btn-secondario" id="btnDemo">Ripristina demo</button>
+        <button class="btn-secondario" id="btnCancellaCategoria">Cancella categoria</button>
       </div>
 
       <div class="aiuto">
-        Suggerimento: durante la fiera puoi aprire questa pagina su PC o tablet. Il pannello laterale può essere usato dagli organizzatori per cambiare rapidamente le domande.
+        Le domande vengono salvate automaticamente su questo dispositivo. Quando hai finito, chiudi la gestione domande dal pulsante in alto a destra.
       </div>
 
       <h3>Domande attuali</h3>
@@ -337,18 +328,21 @@
     const btnReset = document.getElementById('btnReset');
     const risultato = document.getElementById('risultato');
     const categoriaSelect = document.getElementById('categoria');
-    const domandeInput = document.getElementById('domandeInput');
-    const btnSalva = document.getElementById('btnSalva');
-    const btnDemo = document.getElementById('btnDemo');
     const listaDomande = document.getElementById('listaDomande');
+    const pannello = document.getElementById('pannello');
+    const btnAdmin = document.getElementById('btnAdmin');
 
-    const colori = {
-      verde: '#43a047',
-      giallo: '#fdd835',
-      arancio: '#fb8c00',
-      rosso: '#e53935'
-    };
+    const testoDomanda = document.getElementById('testoDomanda');
+    const risposta1 = document.getElementById('risposta1');
+    const risposta2 = document.getElementById('risposta2');
+    const risposta3 = document.getElementById('risposta3');
+    const corretta = document.getElementById('corretta');
+    const btnAggiungi = document.getElementById('btnAggiungi');
+    const btnSvuota = document.getElementById('btnSvuota');
+    const btnDemo = document.getElementById('btnDemo');
+    const btnCancellaCategoria = document.getElementById('btnCancellaCategoria');
 
+    const colori = { verde: '#43a047', giallo: '#fdd835', arancio: '#fb8c00', rosso: '#e53935' };
     const nomiCategorie = {
       verde: 'Verde - Facile',
       giallo: 'Giallo - Medio-facile',
@@ -356,7 +350,6 @@
       rosso: 'Rosso - Difficile'
     };
 
-    // 8 spicchi: due per ogni colore, in ordine crescente di difficoltà.
     const spicchi = [
       { categoria: 'verde', testo: 'Facile' },
       { categoria: 'verde', testo: 'Facile' },
@@ -370,24 +363,20 @@
 
     const domandeDemo = {
       verde: [
-        'Qual è una cosa che ti piacerebbe scoprire dell’università?',
-        'Quanti anni dura normalmente una laurea triennale in Italia?',
-        'Che cosa ti aspetti da una giornata universitaria?'
+        { domanda: 'Quanti anni dura normalmente una laurea triennale in Italia?', risposte: ['2 anni', '3 anni', '5 anni'], corretta: 1 },
+        { domanda: 'Che cosa si fa principalmente durante un open day universitario?', risposte: ['Si scoprono corsi e servizi', 'Si fanno solo esami', 'Si ritirano i diplomi'], corretta: 0 }
       ],
       giallo: [
-        'Secondo te, perché è importante fare esperienza pratica durante l’università?',
-        'Che differenza c’è tra una lezione teorica e un laboratorio?',
-        'Quale competenza vorresti sviluppare nei prossimi anni?'
+        { domanda: 'Perché può essere utile fare un laboratorio durante l’università?', risposte: ['Per applicare ciò che si studia', 'Per saltare le lezioni', 'Per evitare il lavoro di gruppo'], corretta: 0 },
+        { domanda: 'Che cos’è un piano di studi?', risposte: ['L’elenco degli esami e attività del percorso', 'Il calendario delle vacanze', 'La mappa della città'], corretta: 0 }
       ],
       arancio: [
-        'Come sceglieresti il corso universitario più adatto a te?',
-        'Quali fattori considereresti per decidere se studiare fuori sede?',
-        'Perché il lavoro di gruppo può essere utile in università?'
+        { domanda: 'Quale fattore è importante quando scegli un corso universitario?', risposte: ['Interessi personali e obiettivi futuri', 'Solo il colore del logo', 'Solo la distanza dal bar'], corretta: 0 },
+        { domanda: 'Perché il lavoro di gruppo può essere importante?', risposte: ['Aiuta a collaborare e comunicare', 'Serve a non studiare', 'Sostituisce sempre gli esami'], corretta: 0 }
       ],
       rosso: [
-        'Come spiegheresti a un amico il valore di una formazione universitaria?',
-        'Quale problema reale ti piacerebbe risolvere con ciò che studierai?',
-        'Come ti immagini il tuo percorso dopo la laurea?'
+        { domanda: 'Qual è un buon modo per affrontare una scelta universitaria complessa?', risposte: ['Informarsi, confrontare opzioni e chiedere orientamento', 'Scegliere a caso', 'Ignorare scadenze e requisiti'], corretta: 0 },
+        { domanda: 'Cosa significa collegare studio e mondo del lavoro?', risposte: ['Sviluppare competenze utili anche fuori dall’aula', 'Lavorare sempre al posto di studiare', 'Non frequentare mai le lezioni'], corretta: 0 }
       ]
     };
 
@@ -396,144 +385,154 @@
     let inRotazione = false;
 
     function caricaDomande() {
-      const salvate = localStorage.getItem('ruotaDellaStallaDomande');
+      const salvate = localStorage.getItem('ruotaDellaStallaDomandeMultiple');
       if (salvate) {
-        try {
-          return JSON.parse(salvate);
-        } catch (e) {
-          return structuredClone(domandeDemo);
-        }
+        try { return JSON.parse(salvate); } catch (e) { return structuredClone(domandeDemo); }
       }
       return structuredClone(domandeDemo);
     }
 
     function salvaDomande() {
-      localStorage.setItem('ruotaDellaStallaDomande', JSON.stringify(domande));
+      localStorage.setItem('ruotaDellaStallaDomandeMultiple', JSON.stringify(domande));
     }
 
     function disegnaRuota() {
-      const w = canvas.width;
-      const h = canvas.height;
-      const cx = w / 2;
-      const cy = h / 2;
+      const w = canvas.width, h = canvas.height, cx = w / 2, cy = h / 2;
       const r = Math.min(w, h) / 2 - 18;
       const angoloSpicchio = (Math.PI * 2) / spicchi.length;
-
       ctx.clearRect(0, 0, w, h);
 
       spicchi.forEach((spicchio, i) => {
         const start = -Math.PI / 2 + i * angoloSpicchio;
         const end = start + angoloSpicchio;
-
-        ctx.beginPath();
-        ctx.moveTo(cx, cy);
-        ctx.arc(cx, cy, r, start, end);
-        ctx.closePath();
-        ctx.fillStyle = colori[spicchio.categoria];
-        ctx.fill();
-
-        ctx.lineWidth = 6;
-        ctx.strokeStyle = '#ffffff';
-        ctx.stroke();
-
-        ctx.save();
-        ctx.translate(cx, cy);
-        ctx.rotate(start + angoloSpicchio / 2);
+        ctx.beginPath(); ctx.moveTo(cx, cy); ctx.arc(cx, cy, r, start, end); ctx.closePath();
+        ctx.fillStyle = colori[spicchio.categoria]; ctx.fill();
+        ctx.lineWidth = 6; ctx.strokeStyle = '#ffffff'; ctx.stroke();
+        ctx.save(); ctx.translate(cx, cy); ctx.rotate(start + angoloSpicchio / 2);
         ctx.textAlign = 'center';
         ctx.fillStyle = spicchio.categoria === 'giallo' ? '#3a2716' : '#ffffff';
-        ctx.font = 'bold 34px Arial';
-        ctx.fillText(spicchio.testo, r * 0.62, 10);
-        ctx.restore();
+        ctx.font = 'bold 34px Arial'; ctx.fillText(spicchio.testo, r * 0.62, 10); ctx.restore();
       });
 
-      ctx.beginPath();
-      ctx.arc(cx, cy, r, 0, Math.PI * 2);
-      ctx.lineWidth = 12;
-      ctx.strokeStyle = '#4b2e16';
-      ctx.stroke();
+      ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.lineWidth = 12; ctx.strokeStyle = '#4b2e16'; ctx.stroke();
     }
 
-    function aggiornaEditor() {
+    function aggiornaLista() {
       const categoria = categoriaSelect.value;
-      domandeInput.value = (domande[categoria] || []).join('\n');
       listaDomande.innerHTML = '';
-
-      (domande[categoria] || []).forEach(domanda => {
+      (domande[categoria] || []).forEach((item, index) => {
         const li = document.createElement('li');
-        li.textContent = domanda;
+        li.innerHTML = `<strong>${item.domanda}</strong><br>A) ${item.risposte[0]}<br>B) ${item.risposte[1]}<br>C) ${item.risposte[2]}<br><em>Corretta: ${['A','B','C'][item.corretta]}</em> <button onclick="eliminaDomanda('${categoria}', ${index})" style="padding:6px 10px; margin-left:6px; font-size:0.8rem;">Elimina</button>`;
         listaDomande.appendChild(li);
       });
     }
 
+    window.eliminaDomanda = function(categoria, index) {
+      if (!confirm('Eliminare questa domanda?')) return;
+      domande[categoria].splice(index, 1);
+      salvaDomande();
+      aggiornaLista();
+    }
+
     function domandaCasuale(categoria) {
       const elenco = domande[categoria] || [];
-      if (elenco.length === 0) {
-        return 'Nessuna domanda inserita per questa categoria. Aggiungine una dal pannello laterale.';
-      }
+      if (elenco.length === 0) return null;
       return elenco[Math.floor(Math.random() * elenco.length)];
     }
 
     function mostraRisultato(categoria) {
-      const domanda = domandaCasuale(categoria);
+      const item = domandaCasuale(categoria);
+      if (!item) {
+        risultato.innerHTML = `<div class="badge" style="background:${colori[categoria]}">${nomiCategorie[categoria]}</div><div class="domanda">Nessuna domanda inserita per questa categoria.</div>`;
+        return;
+      }
+
       risultato.innerHTML = `
-        <div class="badge" style="background:${colori[categoria]}; color:${categoria === 'giallo' ? '#3a2716' : '#ffffff'}">
-          ${nomiCategorie[categoria]}
+        <div class="badge" style="background:${colori[categoria]}; color:${categoria === 'giallo' ? '#3a2716' : '#ffffff'}">${nomiCategorie[categoria]}</div>
+        <div class="domanda">${item.domanda}</div>
+        <div class="risposte">
+          ${item.risposte.map((r, i) => `<button class="risposta" data-i="${i}">${['A','B','C'][i]}) ${r}</button>`).join('')}
         </div>
-        <div class="domanda">${domanda}</div>
+        <div class="feedback" id="feedback"></div>
       `;
+
+      document.querySelectorAll('.risposta').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const scelta = Number(btn.dataset.i);
+          document.querySelectorAll('.risposta').forEach((b, i) => {
+            b.disabled = true;
+            if (i === item.corretta) b.classList.add('corretta');
+            else if (i === scelta) b.classList.add('errata');
+          });
+          document.getElementById('feedback').textContent = scelta === item.corretta ? '✅ Risposta corretta!' : '❌ Risposta sbagliata!';
+        });
+      });
     }
 
     function giraRuota() {
       if (inRotazione) return;
-      inRotazione = true;
-      btnGira.disabled = true;
-
+      inRotazione = true; btnGira.disabled = true;
       const indiceVincente = Math.floor(Math.random() * spicchi.length);
       const angoloSpicchio = 360 / spicchi.length;
       const centroSpicchio = indiceVincente * angoloSpicchio + angoloSpicchio / 2;
       const giriExtra = 5 + Math.floor(Math.random() * 4);
-
-      // La freccia è in alto: ruotiamo la ruota fino a portare lo spicchio scelto sotto la freccia.
       const rotazioneFinale = giriExtra * 360 + (360 - centroSpicchio);
       angoloCorrente += rotazioneFinale;
       canvas.style.transform = `rotate(${angoloCorrente}deg)`;
-
       setTimeout(() => {
-        const categoria = spicchi[indiceVincente].categoria;
-        mostraRisultato(categoria);
-        inRotazione = false;
-        btnGira.disabled = false;
+        mostraRisultato(spicchi[indiceVincente].categoria);
+        inRotazione = false; btnGira.disabled = false;
       }, 4300);
     }
 
-    btnGira.addEventListener('click', giraRuota);
+    function svuotaCampi() {
+      testoDomanda.value = ''; risposta1.value = ''; risposta2.value = ''; risposta3.value = ''; corretta.value = '0';
+    }
 
-    btnReset.addEventListener('click', () => {
-      risultato.innerHTML = '<div class="placeholder">Premi il pulsante per iniziare.</div>';
+    btnAdmin.addEventListener('click', () => {
+      pannello.classList.toggle('nascosto');
+      btnAdmin.textContent = pannello.classList.contains('nascosto') ? '⚙️ Gestione domande' : '✖ Chiudi gestione';
     });
 
-    categoriaSelect.addEventListener('change', aggiornaEditor);
+    btnGira.addEventListener('click', giraRuota);
+    btnReset.addEventListener('click', () => { risultato.innerHTML = '<div class="placeholder">Premi il pulsante per iniziare.</div>'; });
+    categoriaSelect.addEventListener('change', aggiornaLista);
+    btnSvuota.addEventListener('click', svuotaCampi);
 
-    btnSalva.addEventListener('click', () => {
+    btnAggiungi.addEventListener('click', () => {
       const categoria = categoriaSelect.value;
-      domande[categoria] = domandeInput.value
-        .split('\n')
-        .map(testo => testo.trim())
-        .filter(Boolean);
+      const nuova = {
+        domanda: testoDomanda.value.trim(),
+        risposte: [risposta1.value.trim(), risposta2.value.trim(), risposta3.value.trim()],
+        corretta: Number(corretta.value)
+      };
+      if (!nuova.domanda || nuova.risposte.some(r => !r)) {
+        alert('Compila domanda e tutte e tre le risposte.');
+        return;
+      }
+      domande[categoria].push(nuova);
       salvaDomande();
-      aggiornaEditor();
-      alert('Domande salvate!');
+      svuotaCampi();
+      aggiornaLista();
+      alert('Domanda aggiunta!');
     });
 
     btnDemo.addEventListener('click', () => {
-      if (!confirm('Vuoi ripristinare le domande demo? Le modifiche salvate verranno cancellate.')) return;
+      if (!confirm('Vuoi ripristinare le domande demo?')) return;
       domande = structuredClone(domandeDemo);
-      salvaDomande();
-      aggiornaEditor();
+      salvaDomande(); aggiornaLista();
+    });
+
+    btnCancellaCategoria.addEventListener('click', () => {
+      const categoria = categoriaSelect.value;
+      if (!confirm(`Vuoi cancellare tutte le domande della categoria ${nomiCategorie[categoria]}?`)) return;
+      domande[categoria] = [];
+      salvaDomande(); aggiornaLista();
     });
 
     disegnaRuota();
-    aggiornaEditor();
+    aggiornaLista();
   </script>
 </body>
 </html>
