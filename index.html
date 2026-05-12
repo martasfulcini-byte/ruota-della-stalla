@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>La Ruota della Stalla</title>
+  <style>
+    :root {
+      --verde: #43a047;
+      --giallo: #fdd835;
+      --arancio: #fb8c00;
+      --rosso: #e53935;
+      --sfondo: #fff8e7;
+      --testo: #2d2418;
+      --card: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: radial-gradient(circle at top, #fff3c4, var(--sfondo));
+      color: var(--testo);
+      min-height: 100vh;
+    }
+
+    header {
+      text-align: center;
+      padding: 24px 16px 8px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 4rem);
+      letter-spacing: 1px;
+    }
+
+    .sottotitolo {
+      margin-top: 8px;
+      font-size: 1.1rem;
+      opacity: 0.8;
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: minmax(320px, 1fr) 380px;
+      gap: 28px;
+      padding: 20px;
+      max-width: 1250px;
+      margin: 0 auto;
+      align-items: start;
+    }
+
+    .area-gioco,
+    .pannello {
+      background: rgba(255, 255, 255, 0.86);
+      border-radius: 28px;
+      padding: 24px;
+      box-shadow: 0 18px 45px rgba(76, 52, 18, 0.16);
+    }
+
+    .area-gioco {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 660px;
+    }
+
+    .ruota-wrapper {
+      position: relative;
+      width: min(76vw, 520px);
+      aspect-ratio: 1;
+      margin-top: 10px;
+    }
+
+    .freccia {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 22px solid transparent;
+      border-right: 22px solid transparent;
+      border-top: 46px solid #4b2e16;
+      z-index: 5;
+      filter: drop-shadow(0 4px 2px rgba(0,0,0,0.22));
+    }
+
+    canvas {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
+      background: white;
+      transition: transform 4.2s cubic-bezier(0.12, 0.72, 0.12, 1);
+    }
+
+    .centro-ruota {
+      position: absolute;
+      inset: 50% auto auto 50%;
+      transform: translate(-50%, -50%);
+      width: 92px;
+      height: 92px;
+      border-radius: 50%;
+      background: #fff7df;
+      border: 7px solid #4b2e16;
+      display: grid;
+      place-items: center;
+      font-size: 2.2rem;
+      box-shadow: 0 5px 12px rgba(0,0,0,0.25);
+      pointer-events: none;
+    }
+
+    .azioni {
+      margin-top: 28px;
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 15px 26px;
+      font-size: 1.05rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    }
+
+    button:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .btn-gira {
+      background: #4b2e16;
+      color: white;
+      font-size: 1.25rem;
+      padding: 18px 34px;
+    }
+
+    .btn-secondario {
+      background: #ead8b7;
+      color: #3a2716;
+    }
+
+    .risultato {
+      width: 100%;
+      margin-top: 26px;
+      padding: 22px;
+      border-radius: 24px;
+      background: #fffaf0;
+      border: 3px dashed #d2ad70;
+      min-height: 145px;
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 7px 14px;
+      border-radius: 999px;
+      color: white;
+      font-weight: 800;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .domanda {
+      font-size: clamp(1.25rem, 3vw, 2rem);
+      font-weight: 800;
+      line-height: 1.25;
+    }
+
+    .placeholder {
+      opacity: 0.65;
+      font-size: 1.25rem;
+      margin-top: 20px;
+    }
+
+    .pannello h2 {
+      margin-top: 0;
+      font-size: 1.5rem;
+    }
+
+    label {
+      display: block;
+      font-weight: 800;
+      margin: 16px 0 8px;
+    }
+
+    select,
+    textarea,
+    input {
+      width: 100%;
+      border: 2px solid #ead8b7;
+      border-radius: 16px;
+      padding: 12px;
+      font-size: 1rem;
+      background: white;
+      color: var(--testo);
+    }
+
+    textarea {
+      min-height: 150px;
+      resize: vertical;
+      line-height: 1.35;
+    }
+
+    .aiuto {
+      font-size: 0.9rem;
+      line-height: 1.35;
+      background: #fff4d8;
+      padding: 12px;
+      border-radius: 16px;
+      margin-top: 14px;
+    }
+
+    .lista-domande {
+      margin-top: 16px;
+      padding-left: 18px;
+      max-height: 190px;
+      overflow: auto;
+    }
+
+    .lista-domande li {
+      margin-bottom: 8px;
+    }
+
+    .legenda {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .legenda span {
+      border-radius: 12px;
+      padding: 10px;
+      color: white;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .legenda .giallo {
+      color: #3a2716;
+    }
+
+    @media (max-width: 920px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+
+      .area-gioco {
+        min-height: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🐄 La Ruota della Stalla</h1>
+    <div class="sottotitolo">Gira la ruota, scopri la difficoltà e rispondi alla domanda!</div>
+  </header>
+
+  <main>
+    <section class="area-gioco">
+      <div class="ruota-wrapper">
+        <div class="freccia" aria-hidden="true"></div>
+        <canvas id="ruota" width="900" height="900"></canvas>
+        <div class="centro-ruota">🐮</div>
+      </div>
+
+      <div class="azioni">
+        <button class="btn-gira" id="btnGira">GIRA LA RUOTA</button>
+        <button class="btn-secondario" id="btnReset">Nuova domanda</button>
+      </div>
+
+      <div class="risultato" id="risultato">
+        <div class="placeholder">Premi il pulsante per iniziare.</div>
+      </div>
+    </section>
+
+    <aside class="pannello">
+      <h2>Gestione domande</h2>
+      <p>Inserisci una domanda per riga nella categoria corretta. Le domande vengono salvate sul dispositivo.</p>
+
+      <div class="legenda">
+        <span style="background: var(--verde)">Verde<br>Facile</span>
+        <span class="giallo" style="background: var(--giallo)">Giallo<br>Medio-facile</span>
+        <span style="background: var(--arancio)">Arancio<br>Medio-difficile</span>
+        <span style="background: var(--rosso)">Rosso<br>Difficile</span>
+      </div>
+
+      <label for="categoria">Categoria</label>
+      <select id="categoria">
+        <option value="verde">Verde - Facile</option>
+        <option value="giallo">Giallo - Medio-facile</option>
+        <option value="arancio">Arancio - Medio-difficile</option>
+        <option value="rosso">Rosso - Difficile</option>
+      </select>
+
+      <label for="domandeInput">Domande</label>
+      <textarea id="domandeInput" placeholder="Scrivi qui le domande, una per riga"></textarea>
+
+      <div class="azioni" style="justify-content: flex-start; margin-top: 14px;">
+        <button class="btn-secondario" id="btnSalva">Salva domande</button>
+        <button class="btn-secondario" id="btnDemo">Ripristina demo</button>
+      </div>
+
+      <div class="aiuto">
+        Suggerimento: durante la fiera puoi aprire questa pagina su PC o tablet. Il pannello laterale può essere usato dagli organizzatori per cambiare rapidamente le domande.
+      </div>
+
+      <h3>Domande attuali</h3>
+      <ol class="lista-domande" id="listaDomande"></ol>
+    </aside>
+  </main>
+
+  <script>
+    const canvas = document.getElementById('ruota');
+    const ctx = canvas.getContext('2d');
+    const btnGira = document.getElementById('btnGira');
+    const btnReset = document.getElementById('btnReset');
+    const risultato = document.getElementById('risultato');
+    const categoriaSelect = document.getElementById('categoria');
+    const domandeInput = document.getElementById('domandeInput');
+    const btnSalva = document.getElementById('btnSalva');
+    const btnDemo = document.getElementById('btnDemo');
+    const listaDomande = document.getElementById('listaDomande');
+
+    const colori = {
+      verde: '#43a047',
+      giallo: '#fdd835',
+      arancio: '#fb8c00',
+      rosso: '#e53935'
+    };
+
+    const nomiCategorie = {
+      verde: 'Verde - Facile',
+      giallo: 'Giallo - Medio-facile',
+      arancio: 'Arancio - Medio-difficile',
+      rosso: 'Rosso - Difficile'
+    };
+
+    // 8 spicchi: due per ogni colore, in ordine crescente di difficoltà.
+    const spicchi = [
+      { categoria: 'verde', testo: 'Facile' },
+      { categoria: 'verde', testo: 'Facile' },
+      { categoria: 'giallo', testo: 'Medio' },
+      { categoria: 'giallo', testo: 'Medio' },
+      { categoria: 'arancio', testo: 'Difficile' },
+      { categoria: 'arancio', testo: 'Difficile' },
+      { categoria: 'rosso', testo: 'Molto difficile' },
+      { categoria: 'rosso', testo: 'Molto difficile' }
+    ];
+
+    const domandeDemo = {
+      verde: [
+        'Qual è una cosa che ti piacerebbe scoprire dell’università?',
+        'Quanti anni dura normalmente una laurea triennale in Italia?',
+        'Che cosa ti aspetti da una giornata universitaria?'
+      ],
+      giallo: [
+        'Secondo te, perché è importante fare esperienza pratica durante l’università?',
+        'Che differenza c’è tra una lezione teorica e un laboratorio?',
+        'Quale competenza vorresti sviluppare nei prossimi anni?'
+      ],
+      arancio: [
+        'Come sceglieresti il corso universitario più adatto a te?',
+        'Quali fattori considereresti per decidere se studiare fuori sede?',
+        'Perché il lavoro di gruppo può essere utile in università?'
+      ],
+      rosso: [
+        'Come spiegheresti a un amico il valore di una formazione universitaria?',
+        'Quale problema reale ti piacerebbe risolvere con ciò che studierai?',
+        'Come ti immagini il tuo percorso dopo la laurea?'
+      ]
+    };
+
+    let domande = caricaDomande();
+    let angoloCorrente = 0;
+    let inRotazione = false;
+
+    function caricaDomande() {
+      const salvate = localStorage.getItem('ruotaDellaStallaDomande');
+      if (salvate) {
+        try {
+          return JSON.parse(salvate);
+        } catch (e) {
+          return structuredClone(domandeDemo);
+        }
+      }
+      return structuredClone(domandeDemo);
+    }
+
+    function salvaDomande() {
+      localStorage.setItem('ruotaDellaStallaDomande', JSON.stringify(domande));
+    }
+
+    function disegnaRuota() {
+      const w = canvas.width;
+      const h = canvas.height;
+      const cx = w / 2;
+      const cy = h / 2;
+      const r = Math.min(w, h) / 2 - 18;
+      const angoloSpicchio = (Math.PI * 2) / spicchi.length;
+
+      ctx.clearRect(0, 0, w, h);
+
+      spicchi.forEach((spicchio, i) => {
+        const start = -Math.PI / 2 + i * angoloSpicchio;
+        const end = start + angoloSpicchio;
+
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.arc(cx, cy, r, start, end);
+        ctx.closePath();
+        ctx.fillStyle = colori[spicchio.categoria];
+        ctx.fill();
+
+        ctx.lineWidth = 6;
+        ctx.strokeStyle = '#ffffff';
+        ctx.stroke();
+
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.rotate(start + angoloSpicchio / 2);
+        ctx.textAlign = 'center';
+        ctx.fillStyle = spicchio.categoria === 'giallo' ? '#3a2716' : '#ffffff';
+        ctx.font = 'bold 34px Arial';
+        ctx.fillText(spicchio.testo, r * 0.62, 10);
+        ctx.restore();
+      });
+
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.lineWidth = 12;
+      ctx.strokeStyle = '#4b2e16';
+      ctx.stroke();
+    }
+
+    function aggiornaEditor() {
+      const categoria = categoriaSelect.value;
+      domandeInput.value = (domande[categoria] || []).join('\n');
+      listaDomande.innerHTML = '';
+
+      (domande[categoria] || []).forEach(domanda => {
+        const li = document.createElement('li');
+        li.textContent = domanda;
+        listaDomande.appendChild(li);
+      });
+    }
+
+    function domandaCasuale(categoria) {
+      const elenco = domande[categoria] || [];
+      if (elenco.length === 0) {
+        return 'Nessuna domanda inserita per questa categoria. Aggiungine una dal pannello laterale.';
+      }
+      return elenco[Math.floor(Math.random() * elenco.length)];
+    }
+
+    function mostraRisultato(categoria) {
+      const domanda = domandaCasuale(categoria);
+      risultato.innerHTML = `
+        <div class="badge" style="background:${colori[categoria]}; color:${categoria === 'giallo' ? '#3a2716' : '#ffffff'}">
+          ${nomiCategorie[categoria]}
+        </div>
+        <div class="domanda">${domanda}</div>
+      `;
+    }
+
+    function giraRuota() {
+      if (inRotazione) return;
+      inRotazione = true;
+      btnGira.disabled = true;
+
+      const indiceVincente = Math.floor(Math.random() * spicchi.length);
+      const angoloSpicchio = 360 / spicchi.length;
+      const centroSpicchio = indiceVincente * angoloSpicchio + angoloSpicchio / 2;
+      const giriExtra = 5 + Math.floor(Math.random() * 4);
+
+      // La freccia è in alto: ruotiamo la ruota fino a portare lo spicchio scelto sotto la freccia.
+      const rotazioneFinale = giriExtra * 360 + (360 - centroSpicchio);
+      angoloCorrente += rotazioneFinale;
+      canvas.style.transform = `rotate(${angoloCorrente}deg)`;
+
+      setTimeout(() => {
+        const categoria = spicchi[indiceVincente].categoria;
+        mostraRisultato(categoria);
+        inRotazione = false;
+        btnGira.disabled = false;
+      }, 4300);
+    }
+
+    btnGira.addEventListener('click', giraRuota);
+
+    btnReset.addEventListener('click', () => {
+      risultato.innerHTML = '<div class="placeholder">Premi il pulsante per iniziare.</div>';
+    });
+
+    categoriaSelect.addEventListener('change', aggiornaEditor);
+
+    btnSalva.addEventListener('click', () => {
+      const categoria = categoriaSelect.value;
+      domande[categoria] = domandeInput.value
+        .split('\n')
+        .map(testo => testo.trim())
+        .filter(Boolean);
+      salvaDomande();
+      aggiornaEditor();
+      alert('Domande salvate!');
+    });
+
+    btnDemo.addEventListener('click', () => {
+      if (!confirm('Vuoi ripristinare le domande demo? Le modifiche salvate verranno cancellate.')) return;
+      domande = structuredClone(domandeDemo);
+      salvaDomande();
+      aggiornaEditor();
+    });
+
+    disegnaRuota();
+    aggiornaEditor();
+  </script>
+</body>
+</html>
